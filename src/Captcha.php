@@ -178,6 +178,9 @@ class Captcha
         // 绘验证码
         $code   = []; // 验证码
         $codeNX = 0; // 验证码第N个字符的左边距
+        $randRateMin = ($this->imageW - $this->length * $this->fontSize) / $this->length / 2 / $this->fontSize * 1.2;
+        $randRateMax = $randRateMin * 1.4;
+        
         if ($this->useZh) {
             // 中文验证码
             for ($i = 0; $i < $this->length; $i++) {
@@ -187,7 +190,7 @@ class Captcha
         } else {
             for ($i = 0; $i < $this->length; $i++) {
                 $code[$i] = $this->codeSet[mt_rand(0, strlen($this->codeSet) - 1)];
-                $codeNX += mt_rand($this->fontSize * 1.2, $this->fontSize * 1.6);
+                $codeNX += ($i == 0 ?: $this->fontSize) + mt_rand($this->fontSize * $randRateMin, $this->fontSize * $randRateMax);
                 imagettftext($this->im, $this->fontSize, mt_rand(-40, 40), $codeNX, $this->fontSize * 1.6, $this->color, $this->fontttf, $code[$i]);
             }
         }
