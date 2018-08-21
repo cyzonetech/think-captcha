@@ -24,6 +24,9 @@ class CaptchaController
         if (isset($_GET['imageH']) && intval($_GET['imageH'])) {
             $config['imageH'] = intval($_GET['imageH']);
         }
+        if (isset($_GET['fontSize']) && intval($_GET['fontSize'])) {
+            $config['fontSize'] = intval($_GET['fontSize']);
+        }
         $captcha = new Captcha($config);
         return $captcha->entry($id);
     }
