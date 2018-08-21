@@ -135,6 +135,11 @@ class Captcha
      */
     public function entry($id = '')
     {
+        // 绘验证码
+        $code   = []; // 验证码
+        $codeNX = 0; // 验证码第N个字符的左边距
+        $codeNY = $this->imageH ? ($this->imageH - $this->fontSize) * 1.5 : $this->fontSize;
+        
         // 图片宽(px)
         $this->imageW || $this->imageW = $this->length * $this->fontSize * 1.5 + $this->length * $this->fontSize / 2;
         // 图片高(px)
@@ -176,8 +181,6 @@ class Captcha
         }
 
         // 绘验证码
-        $code   = []; // 验证码
-        $codeNX = 0; // 验证码第N个字符的左边距
         $randRateMin = ($this->imageW - $this->length * $this->fontSize) / $this->length / 2 / $this->fontSize * 1.2;
         $randRateMax = $randRateMin * 1.4;
         
@@ -191,7 +194,7 @@ class Captcha
             for ($i = 0; $i < $this->length; $i++) {
                 $code[$i] = $this->codeSet[mt_rand(0, strlen($this->codeSet) - 1)];
                 $codeNX += ($i == 0 ?: $this->fontSize) + mt_rand($this->fontSize * $randRateMin, $this->fontSize * $randRateMax);
-                imagettftext($this->im, $this->fontSize, mt_rand(-40, 40), $codeNX, $this->fontSize * 1.6, $this->color, $this->fontttf, $code[$i]);
+                imagettftext($this->im, $this->fontSize, mt_rand(-40, 40), $codeNX, $codeNY * 1.6, $this->color, $this->fontttf, $code[$i]);
             }
         }
 
