@@ -17,7 +17,14 @@ class CaptchaController
 {
     public function index($id = "")
     {
-        $captcha = new Captcha((array) Config::pull('captcha'));
+        $config = (array) Config::pull('captcha');
+        if (isset($_GET['imageW']) && intval($_GET['imageW'])) {
+            $config['imageW'] = intval($_GET['imageW']);
+        }
+        if (isset($_GET['imageH']) && intval($_GET['imageH'])) {
+            $config['imageH'] = intval($_GET['imageH']);
+        }
+        $captcha = new Captcha($config);
         return $captcha->entry($id);
     }
 }
