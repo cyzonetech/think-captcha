@@ -138,8 +138,7 @@ class Captcha
         // 绘验证码
         $code   = []; // 验证码
         $codeNX = 0; // 验证码第N个字符的左边距
-        $codeNY = $this->imageH ? ($this->imageH - $this->fontSize) * 1.5 : $this->fontSize;
-        
+        $codeNY = $this->imageH ? $this->imageH / 2 : $this->fontSize;
         // 图片宽(px)
         $this->imageW || $this->imageW = $this->length * $this->fontSize * 1.5 + $this->length * $this->fontSize / 2;
         // 图片高(px)
