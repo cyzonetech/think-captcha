@@ -135,14 +135,11 @@ class Captcha
      */
     public function entry($id = '')
     {
-        // 绘验证码
-        $code   = []; // 验证码
-        $codeNX = 0; // 验证码第N个字符的左边距
-        $codeNY = $this->imageH ? $this->imageH / 2 : $this->fontSize;
         // 图片宽(px)
-        $this->imageW || $this->imageW = $this->length * $this->fontSize * 1.5 + $this->length * $this->fontSize / 2;
+        $this->imageW || $this->imageW = $this->length * $this->fontSize * 1.8;
         // 图片高(px)
         $this->imageH || $this->imageH = $this->fontSize * 2.5;
+
         // 建立一幅 $this->imageW x $this->imageH 的图像
         $this->im = imagecreate($this->imageW, $this->imageH);
         // 设置背景
@@ -180,20 +177,24 @@ class Captcha
         }
 
         // 绘验证码
-        $randRateMin = ($this->imageW - $this->length * $this->fontSize) / $this->length / 2 / $this->fontSize * 1.2;
-        $randRateMax = $randRateMin * 1.4;
-        
+        $code   = []; // 验证码
+        $codeNX = 0; // 验证码第N个字符的左边距
+        $x = 10; // 验证码左边距
+        $y = $this->imageH - ($this->imageH - $this->fontSize) / 2;
+        $dx = ($this->imageW - 10) / $this->length;
         if ($this->useZh) {
             // 中文验证码
             for ($i = 0; $i < $this->length; $i++) {
                 $code[$i] = iconv_substr($this->zhSet, floor(mt_rand(0, mb_strlen($this->zhSet, 'utf-8') - 1)), 1, 'utf-8');
-                imagettftext($this->im, $this->fontSize, mt_rand(-40, 40), $this->fontSize * ($i + 1) * 1.5, $this->fontSize + mt_rand(10, 20), $this->color, $this->fontttf, $code[$i]);
+                imagettftext($this->im, $this->fontSize, mt_rand(-20, 20), $x, $y, $this->color, $this->fontttf, $code[$i]);
+                $x += $dx;
             }
         } else {
             for ($i = 0; $i < $this->length; $i++) {
                 $code[$i] = $this->codeSet[mt_rand(0, strlen($this->codeSet) - 1)];
-                $codeNX += ($i == 0 ?: $this->fontSize) + mt_rand($this->fontSize * $randRateMin, $this->fontSize * $randRateMax);
-                imagettftext($this->im, $this->fontSize, mt_rand(-40, 40), $codeNX, $codeNY * 1.6, $this->color, $this->fontttf, $code[$i]);
+                $codeNX += mt_rand($this->fontSize * 1.2, $this->fontSize * 1.6);
+                imagettftext($this->im, $this->fontSize, mt_rand(-20, 20), $x, $y, $this->color, $this->fontttf, $code[$i]);
+                $x += $dx;
             }
         }
 
