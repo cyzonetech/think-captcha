@@ -8,9 +8,6 @@
         }
     ],
     "license": "Apache-2.0",
-    "require": {
-    	"cyzonetech/framework": "5.1.*"
-    },
     "autoload": {
         "psr-4": {
             "think\\captcha\\": "src/"
