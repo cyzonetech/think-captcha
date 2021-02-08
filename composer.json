@@ -1,5 +1,5 @@
 {
-    "name": "topthink/think-captcha",
+    "name": "cyzonetech/think-captcha",
     "description": "captcha package for thinkphp",
     "authors": [
         {
@@ -9,7 +9,7 @@
     ],
     "license": "Apache-2.0",
     "require": {
-        "topthink/framework": "^6.0.0"
+        "cyzonetech/framework": "^6.0.0"
     },
     "autoload": {
         "psr-4": {
